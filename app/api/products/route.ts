@@ -1,0 +1,11 @@
+import { NextRequest } from 'next/server'; import { requireMemberRole } from '@/lib/auth/guards'; import { productCreateSchema } from '@/lib/validation/schemas'; import { ok,errorResponse,errorMessage } from '@/lib/utils/response'; import { FREE_TIER_LIMITS, getShopTier } from '@/lib/subscription/limits';
+// Harga modal (cost_price) hanya untuk owner; akun kasir tidak boleh menerimanya lewat API.
+function stripCostPrice(rows: Record<string, unknown>[] | null): Record<string, unknown>[] {
+  return (rows ?? []).map(({ cost_price: _cost, ...rest }) => rest);
+}
+
+export async function GET(){try{const {supabase,member}=await requireMemberRole(['owner','cashier']); const {data,error}=await supabase.from('products').select('*').eq('shop_id',member.shop_id).order('name'); if(error)throw error; return ok(member.role==='owner'?data:stripCostPrice(data));}catch(e:unknown){return errorResponse(errorMessage(e)==='UNAUTHORIZED'?'Belum login':'Gagal mengambil produk',errorMessage(e)==='UNAUTHORIZED'?401:500)}}
+export async function POST(req:NextRequest){try{const {supabase,member}=await requireMemberRole(['owner']); const parsed=productCreateSchema.safeParse(await req.json()); if(!parsed.success)return errorResponse('Data produk tidak valid',422);
+  const tierInfo=await getShopTier(supabase,member.shop_id);
+  if(!tierInfo.isPro){ const {count}=await supabase.from('products').select('id',{count:'exact',head:true}).eq('shop_id',member.shop_id); if((count??0)>=FREE_TIER_LIMITS.maxProducts) return errorResponse(`Paket Gratis dibatasi maksimal ${FREE_TIER_LIMITS.maxProducts} produk. Upgrade ke Tier Pro di menu Pengaturan untuk produk tanpa batas.`,403); }
+  const payload={...parsed.data,sku:parsed.data.sku||null,barcode:parsed.data.barcode||null,shop_id:member.shop_id}; const {data,error}=await supabase.from('products').insert(payload).select().single(); if(error)return errorResponse(error.code==='23505'?'SKU atau barcode sudah dipakai produk lain':'Gagal membuat produk',error.code==='23505'?409:500); return ok(data,201);}catch(e:unknown){return errorResponse(errorMessage(e)==='UNAUTHORIZED'?'Belum login':errorMessage(e)==='FORBIDDEN'?'Akses ditolak':'Gagal membuat produk',errorMessage(e)==='UNAUTHORIZED'?401:errorMessage(e)==='FORBIDDEN'?403:500)}}

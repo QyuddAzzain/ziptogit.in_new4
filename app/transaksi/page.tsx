@@ -1,0 +1,21 @@
+'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+
+type Sale={id:string;invoice_number:string;subtotal:number|string;discount:number|string;tax:number|string;grand_total:number|string;payment_method:string;payment_status:string;status:string;created_at:string};
+const labels:Record<string,string>={cash:'Tunai',transfer:'Transfer',qris:'QRIS',debit:'Debit',other:'Lainnya'};
+const money=(v:number)=>`Rp ${Math.max(0,v).toLocaleString('id-ID')}`;
+
+export default function TransaksiPage(){
+  const [sales,setSales]=useState<Sale[]>([]);const [q,setQ]=useState('');const [status,setStatus]=useState('semua');const [loading,setLoading]=useState(true);const [error,setError]=useState('');const [owner,setOwner]=useState(false);const [voiding,setVoiding]=useState<string|null>(null);const [reason,setReason]=useState('');const [busy,setBusy]=useState(false);
+  async function load(){setLoading(true);setError('');try{const res=await fetch('/api/sales');const json=await res.json();if(!json.ok)throw new Error(json.error||'Gagal mengambil transaksi');setSales(json.data)}catch(e:unknown){setError(e instanceof Error&&e.message?e.message:'Gagal mengambil transaksi')}finally{setLoading(false)}}
+  useEffect(()=>{load();fetch('/api/admin').then(r=>r.json()).then(j=>setOwner(!!j.ok)).catch(()=>setOwner(false))},[]);
+  const filtered=useMemo(()=>{const needle=q.trim().toLowerCase();return sales.filter(s=>(status==='semua'||s.status===status)&&(!needle||s.invoice_number.toLowerCase().includes(needle)))},[sales,q,status]);
+  async function voidSale(){if(!voiding||!reason.trim()){setError('Alasan pembatalan wajib diisi.');return}setBusy(true);setError('');try{const res=await fetch('/api/sales/void',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sale_id:voiding,reason:reason.trim()})});const json=await res.json();if(!json.ok)throw new Error(json.error||'Gagal membatalkan transaksi');setVoiding(null);setReason('');await load()}catch(e:unknown){setError(e instanceof Error&&e.message?e.message:'Gagal membatalkan transaksi')}finally{setBusy(false)}}
+  return <section><div className="page-head"><div><h1>Transaksi</h1><p className="muted">Riwayat penjualan dan pembatalan transaksi.</p></div><button className="btn btn-ghost" onClick={load} disabled={loading}>Muat Ulang</button></div>
+    {error&&<div className="card"><p className="error-text">{error}</p></div>}
+    <div className="toolbar"><input value={q} onChange={e=>setQ(e.target.value)} placeholder="Cari nomor invoice…"/><select value={status} onChange={e=>setStatus(e.target.value)}><option value="semua">Semua status</option><option value="completed">Selesai</option><option value="voided">Dibatalkan</option></select></div>
+    <div className="card table-wrap">{loading?<p className="muted">Memuat transaksi…</p>:filtered.length===0?<p className="empty">Belum ada transaksi yang cocok.</p>:<table className="table"><thead><tr><th>Waktu</th><th>Invoice</th><th>Pembayaran</th><th>Total</th><th>Status</th><th></th></tr></thead><tbody>{filtered.map(s=><tr key={s.id}><td>{new Date(s.created_at).toLocaleString('id-ID')}</td><td><a href={`/transaksi/${s.id}`}>{s.invoice_number}</a></td><td>{labels[s.payment_method]??s.payment_method}</td><td className="num">{money(Number(s.grand_total))}</td><td><span className={`badge ${s.status==='completed'?'badge-ok':'badge-off'}`}>{s.status==='completed'?'Selesai':'Dibatalkan'}</span></td><td>{owner&&s.status==='completed'&&<button className="btn btn-ghost btn-sm" onClick={()=>{setVoiding(s.id);setReason('')}}>Batalkan</button>}</td></tr>)}</tbody></table>}</div>
+    {voiding&&<div className="card" style={{marginTop:16}}><h3>Batalkan Transaksi</h3><p className="muted">Pembatalan akan mengembalikan stok sesuai transaksi dan tercatat di audit log.</p><div className="form-grid"><label>Alasan pembatalan<textarea value={reason} onChange={e=>setReason(e.target.value)} placeholder="Contoh: salah input transaksi" rows={3}/></label></div><div className="row-actions" style={{marginTop:12}}><button className="btn btn-ghost" disabled={busy} onClick={()=>{setVoiding(null);setReason('')}}>Tutup</button><button className="btn" disabled={busy||!reason.trim()} onClick={voidSale}>{busy?'Memproses…':'Konfirmasi Pembatalan'}</button></div></div>}
+  </section>
+}

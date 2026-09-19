@@ -1,0 +1,1 @@
+export function calculateSale(items:{quantity:number; unit_price:number}[], discount=0){ const subtotal=items.reduce((s,i)=>s+i.quantity*i.unit_price,0); const safeDiscount=Math.min(Math.max(discount,0),subtotal); return {subtotal,discount:safeDiscount,grand_total:subtotal-safeDiscount}; }

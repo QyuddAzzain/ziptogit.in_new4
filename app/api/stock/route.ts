@@ -1,0 +1,2 @@
+import { requireMemberRole } from '@/lib/auth/guards'; import { ok,errorResponse } from '@/lib/utils/response';
+export async function GET(){try{const {supabase,member}=await requireMemberRole(['owner','cashier']); const {data,error}=await supabase.from('products').select('id,name,sku,stock,minimum_stock,unit').eq('shop_id',member.shop_id).order('stock',{ascending:true}); if(error)throw error; return ok(data);}catch{return errorResponse('Gagal mengambil stok',500)}}
