@@ -39,7 +39,7 @@ export default function LupaPassword() {
         <div>
           <div className="eyebrow">Lupa Password</div>
           <h1>Reset Password Akun</h1>
-          <p className="muted">Masukkan email akun POS UMKM Anda, kami kirim tautan untuk membuat password baru.</p>
+          <p className="muted">Masukkan email akun Kasirku Anda, kami kirim tautan untuk membuat password baru.</p>
         </div>
       </div>
       <form className="card auth-card" onSubmit={submit}>

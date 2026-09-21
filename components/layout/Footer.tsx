@@ -30,8 +30,8 @@ export function Footer() {
     <>
       <footer className="app-footer">
         <div className="footer-brand">
-          <div className="footer-title">Point of Sale UMKM</div>
-          <div className="footer-copy">© 2026 Point of Sale UMKM • Semua hak dilindungi.</div>
+          <div className="footer-title">Kasirku</div>
+          <div className="footer-copy">© 2026 Kasirku • Semua hak dilindungi.</div>
         </div>
         <div className="footer-right">
           <Link href="/privasi">Privasi</Link>

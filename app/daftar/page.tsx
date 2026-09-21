@@ -78,7 +78,7 @@ export default function Daftar() {
   if (awaitingConfirmation) {
     return (
       <section className="auth-page">
-        <div className="page-head"><div><h1>Cek email Anda</h1><p className="muted">Konfirmasi diperlukan sebelum lanjut</p></div></div>
+        <div className="page-head" data-aos="fade-down"><div><h1>Cek email Anda</h1><p className="muted">Konfirmasi diperlukan sebelum lanjut</p></div></div>
         <div className="card auth-card">
           <p>Kami mengirim tautan konfirmasi ke {email}. Setelah dikonfirmasi, masuk untuk melengkapi data toko.</p>
           <button className="btn" onClick={() => router.replace('/login')}>Ke halaman masuk</button>
@@ -89,8 +89,8 @@ export default function Daftar() {
 
   return (
     <section className="auth-page">
-      <div className="page-head"><div><h1>Daftar</h1><p className="muted">{hasSession ? 'Lengkapi data toko Anda' : 'Buat akun Point of Sale UMKM'}</p></div></div>
-      <form className="card auth-card" onSubmit={submit}>
+      <div className="page-head"><div><h1>Daftar</h1><p className="muted">{hasSession ? 'Lengkapi data toko Anda' : 'Buat akun Kasirku'}</p></div></div>
+      <form className="card auth-card" data-aos="fade-up" data-aos-delay="80" onSubmit={submit}>
         {!hasSession && (
           <>
             <label>Email<input type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} required /></label>

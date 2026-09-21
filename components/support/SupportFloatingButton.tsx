@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-// Kontak resmi customer support Point of Sale UMKM.
+// Kontak resmi customer support Kasirku.
 // Ubah di satu tempat ini saja bila nomor/email berganti.
 export const SUPPORT_PHONE_DISPLAY = '0895-3285-56866';
 export const SUPPORT_WA_NUMBER = '62895328556866'; // format internasional untuk wa.me, tanpa "+"
@@ -10,7 +10,7 @@ export const SUPPORT_EMAIL = 'projectpos09@gmail.com';
 
 export function SupportFloatingButton() {
   const [open, setOpen] = useState(false);
-  const waHref = `https://wa.me/${SUPPORT_WA_NUMBER}?text=${encodeURIComponent('Halo Customer Support Point of Sale UMKM, saya butuh bantuan.')}`;
+  const waHref = `https://wa.me/${SUPPORT_WA_NUMBER}?text=${encodeURIComponent('Halo Customer Support Kasirku, saya butuh bantuan.')}`;
   const mailHref = `mailto:${SUPPORT_EMAIL}`;
 
   return (

@@ -43,7 +43,7 @@ export function TopBanner() {
 
   if (pathname === '/' || BARE_LAYOUT_PATHS.includes(pathname) || pathname.startsWith('/login/')) return null;
 
-  const name = shop?.name || 'Point of Sale UMKM';
+  const name = shop?.name || 'Kasirku';
 
   return (
     <header className="top-banner" role="banner">

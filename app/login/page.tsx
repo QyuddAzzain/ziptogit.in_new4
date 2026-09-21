@@ -28,14 +28,14 @@ export default function Login() {
 
   return (
     <section className="auth-page">
-      <div className="page-head">
+      <div className="page-head" data-aos="fade-down">
         <div>
           <div className="eyebrow">Masuk cepat</div>
-          <h1>Point of Sale UMKM</h1>
+          <h1>Kasirku</h1>
           <p className="muted">Masuk ke dashboard, kasir, dan stok dari satu tempat.</p>
         </div>
       </div>
-      <form className="card auth-card" onSubmit={submit}>
+      <form className="card auth-card" data-aos="fade-up" data-aos-delay="80" onSubmit={submit}>
         <label>Email<input type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} required /></label>
         <label>Password<input type="password" autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} required /></label>
         <p className="muted" style={{ margin: 0, textAlign: 'right' }}>

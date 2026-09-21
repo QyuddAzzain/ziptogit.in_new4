@@ -103,7 +103,7 @@ export default function Kasir() {
   const [success, setSuccess] = useState<Sale | null>(null);
   const [lastChange, setLastChange] = useState(0);
   const [mobileTab, setMobileTab] = useState<'catalog' | 'cart'>('catalog');
-  const [shopName, setShopName] = useState('Point of Sale UMKM');
+  const [shopName, setShopName] = useState('Kasirku');
   const [shopLogo, setShopLogo] = useState<string | null>(null);
   const [isPro, setIsPro] = useState(false);
   const supabase = useMemo(() => createClient(), []);

@@ -13,7 +13,7 @@ export default function Privasi() {
 
       <div className="card auth-card" style={{ alignItems: 'stretch', textAlign: 'left' }}>
         <p className="muted" style={{ margin: 0 }}>
-          Halaman ini adalah draf kebijakan privasi standar untuk platform Point of Sale UMKM. Ini bukan
+          Halaman ini adalah draf kebijakan privasi standar untuk platform Kasirku. Ini bukan
           nasihat hukum — sebaiknya ditinjau ulang sesuai kebutuhan bisnis dan regulasi yang berlaku
           sebelum dianggap final.
         </p>

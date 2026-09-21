@@ -35,7 +35,7 @@ export function PWAInstallPrompt() {
   return (
     <div className="pwa-prompt" role="status">
       <div>
-        <strong>Pasang Point of Sale UMKM</strong>
+        <strong>Pasang Kasirku</strong>
         <span>Akses lebih cepat seperti aplikasi.</span>
       </div>
       <div className="row-actions">

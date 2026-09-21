@@ -25,7 +25,7 @@ const faqs: Array<{ q: string; a: string }> = [
 ];
 
 export default function Bantuan() {
-  const waHref = `https://wa.me/${SUPPORT_WA_NUMBER}?text=${encodeURIComponent('Halo Customer Support Point of Sale UMKM, saya butuh bantuan.')}`;
+  const waHref = `https://wa.me/${SUPPORT_WA_NUMBER}?text=${encodeURIComponent('Halo Customer Support Kasirku, saya butuh bantuan.')}`;
 
   return (
     <section className="auth-page">
