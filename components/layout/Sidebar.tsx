@@ -176,7 +176,7 @@ export function Sidebar() {
 
   if (BARE_LAYOUT_PATHS.includes(pathname) || pathname.startsWith('/login/')) return null;
 
-  const shopName = shop?.name || 'Point of Sale UMKM';
+  const shopName = shop?.name || 'Kasirku';
 
   return (
     <>

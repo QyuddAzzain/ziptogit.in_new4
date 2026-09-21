@@ -588,10 +588,10 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="shop-banner">
+      <div className="shop-banner" data-aos="fade-up">
         <div>
           <div className="shop-banner-title">{shopName}</div>
-          <div className="shop-banner-sub">Point of Sale UMKM · Siap melayani transaksi</div>
+          <div className="shop-banner-sub">Kasirku · Siap melayani transaksi</div>
         </div>
         <span className={`badge ${USE_MOCK_DATA ? 'badge-warn' : 'badge-ok'}`}>
           {USE_MOCK_DATA ? 'Data contoh' : 'Operasional'}
@@ -616,7 +616,7 @@ export default function Dashboard() {
         </p>
       )}
 
-      <div className="grid grid-4 dash-stat">
+      <div className="grid grid-4 dash-stat" data-aos="fade-up" data-aos-delay="80">
         <StatCard
           icon="Rp"
           label="Total pendapatan kotor"

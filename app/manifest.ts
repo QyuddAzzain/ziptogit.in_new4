@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Point of Sale UMKM',
-    short_name: 'POS UMKM',
-    description: 'Point of Sale UMKM ringan, rapi, dan siap dipakai toko kecil sampai menengah.',
+    name: 'Kasirku — POS UMKM',
+    short_name: 'Kasirku',
+    description: 'Kasirku adalah aplikasi kasir dan operasional toko yang ringan dan siap dipakai UMKM.',
     start_url: '/dashboard',
     scope: '/',
     display: 'standalone',

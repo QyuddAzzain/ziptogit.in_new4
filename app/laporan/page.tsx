@@ -130,7 +130,7 @@ export default function Page() {
       table{border-collapse:collapse;width:100%} th,td{border:1px solid #cbd5e1;padding:6px;text-align:left} th{background:#f1f5f9;font-weight:700}
       td:nth-child(n+6){text-align:right}
     </style></head><body>
-      <h1>Point of Sale UMKM — Laporan Penjualan</h1>
+      <h1>Kasirku — Laporan Penjualan</h1>
       <p>Periode: ${escapeHtml(report.from)} s.d. ${escapeHtml(report.to)}${report.limited ? ' (dipotong sesuai batas Paket Gratis)' : ''}</p>
       <table><thead><tr><th>Waktu</th><th>Invoice</th><th>Status</th><th>Status bayar</th><th>Metode</th><th>Subtotal</th><th>Diskon</th><th>Pajak</th><th>Total</th></tr></thead><tbody>${body}</tbody></table>
       <p>Total transaksi: <strong>${report.transactions}</strong> &nbsp; Omzet: <strong>${escapeHtml(money(report.omzet))}</strong></p>
@@ -189,7 +189,7 @@ export default function Page() {
       {error && <div className="alert alert-error report-screen-only" role="alert">{error}</div>}
 
       <div className="report-print-header">
-        <div className="eyebrow">Point of Sale UMKM</div>
+        <div className="eyebrow">Kasirku</div>
         <h1>Laporan Penjualan</h1>
         <p>Periode {report?.from ?? from} s.d. {report?.to ?? to}</p>
       </div>
@@ -214,7 +214,7 @@ export default function Page() {
       </div>
 
       <div className="report-print-footer">
-        <span>© 2026 Point of Sale UMKM • Semua hak dilindungi.</span>
+        <span>© 2026 Kasirku • Semua hak dilindungi.</span>
       </div>
     </section>
   );
